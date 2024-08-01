@@ -1,5 +1,6 @@
 import { useAccount, useConnect, useDisconnect, useWriteContract } from "wagmi";
 import { TokenAbi } from "./abis/TokenContract";
+import { ContractAbi } from "./abis/Contract";
 import { parseEther } from "viem";
 
 window.open = (function (open) {
@@ -22,9 +23,12 @@ function App() {
 		writeContract: writeContractApprove
 	} = useWriteContract();
 
+	const {
+		writeContract: writeContractDeposit
+	} = useWriteContract();
+
 	return (
 		<>
-
 			<button
 				onClick={() =>
 					writeContractApprove({
@@ -37,7 +41,17 @@ function App() {
 						],
 					})
 				}
-			>Call</button >
+			>Call Approve</button >
+			<button
+				onClick={() =>
+					writeContractDeposit({
+						abi: ContractAbi,
+						address: mainContract,
+						functionName: "deposit",
+						args: [parseEther("100")],
+					})
+				}
+			>Call Deposit</button >
 			<div>
 				<h2>Account</h2>
 
