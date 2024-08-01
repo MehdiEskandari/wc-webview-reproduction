@@ -1,7 +1,6 @@
 import { useAccount, useConnect, useDisconnect, useWriteContract } from "wagmi";
 import { TokenAbi } from "./abis/TokenContract";
 import { ContractAbi } from "./abis/Contract";
-import { parseEther } from "viem";
 import { abi } from "./abis/abi";
 
 window.open = (function (open) {
