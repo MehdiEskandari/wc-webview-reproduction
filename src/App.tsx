@@ -1,4 +1,6 @@
-import { useAccount, useConnect, useDisconnect } from "wagmi";
+import { useAccount, useConnect, useDisconnect, useWriteContract } from "wagmi";
+import { TokenAbi } from "./abis/TokenContract";
+import { parseEther } from "viem";
 
 window.open = (function (open) {
 	return function (url, _, features) {
@@ -11,8 +13,31 @@ function App() {
 	const { connectors, connect, status, error } = useConnect();
 	const { disconnect } = useDisconnect();
 
+	const mainContract = '0x5B96D1C23d34C301C277aed37261024aEF1456fE';
+	const tokenContract = '0xab1a4d4f1d656d2450692d237fdd6c7f9146e814';
+
+	// const { writeContract } = useWriteContract()
+
+	const {
+		writeContract: writeContractApprove
+	} = useWriteContract();
+
 	return (
 		<>
+
+			<button
+				onClick={() =>
+					writeContractApprove({
+						abi: TokenAbi,
+						address: tokenContract,
+						functionName: "approve",
+						args: [
+							mainContract,
+							parseEther('100'),
+						],
+					})
+				}
+			>Call</button >
 			<div>
 				<h2>Account</h2>
 
